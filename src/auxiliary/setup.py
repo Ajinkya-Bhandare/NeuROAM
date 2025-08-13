@@ -18,7 +18,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'downsampler = auxiliary.downsampler:main'
+            'downsampler = auxiliary.downsampler:main',
+            'camera_params = auxiliary.camera_params:main',
         ],
     },
 )
