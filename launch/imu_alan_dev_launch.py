@@ -284,7 +284,8 @@ def generate_launch_description():
     else:
         record_actions = [
             make_record_action(
-                small_data_topics + cam0_topics + cam1_topics + ouster_topics,
+                # small_data_topics + cam0_topics + cam1_topics + ouster_topics,
+                small_data_topics + ouster_topics,
                 bag_name,
             )
         ]
