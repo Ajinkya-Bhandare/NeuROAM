@@ -128,8 +128,12 @@ alias gp="git push"
 alias gpull="git pull"
 alias gd="git diff"
 alias gc="git commit"
+alias gb="git branch"
 alias gpupdate="git add .; git commit -m 'small update'; git push;"
+alias git-pull-neuroam="cd /home/neuroam/NeuROAM && git pull && git submodule update --init --recursive && cd -"
 
+cp ~/NeuROAM/util/.bashrc ~/.bashrc
+cp ~/NeuROAM/util/check_gps/tmux_display_gps_status.desktop ~/.config/autostart/tmux_display_gps_status.desktop
 alias src="source ~/.bashrc"
 alias src-update="cp ~/NeuROAM/util/.bashrc ~/.bashrc; source ~/.bashrc"
 
@@ -150,8 +154,8 @@ alias neuroam-tmux="tmux new -A -s neuroam"
 # export ZENOH_CONFIG_OVERRIDE="transport/link/tx/queue/congestion_control/drop/wait_before_drop=1000000"
 
 # ~/.bashrc  (or any setup script you source before running ROS 2)
-# ZENOH_ROUTER_CONFIG_URI="~/NeuROAM/util/zenoh_configs/DEFAULT_RMW_ZENOH_ROUTER_CONFIG.json5"
-# ZENOH_SESSION_CONFIG_URI="~/NeuROAM/util/zenoh_configs/DEFAULT_RMW_ZENOH_SESSION_CONFIG.json5"
+ZENOH_ROUTER_CONFIG_URI="~/NeuROAM/util/zenoh_configs/DEFAULT_RMW_ZENOH_ROUTER_CONFIG.json5"
+ZENOH_SESSION_CONFIG_URI="~/NeuROAM/util/zenoh_configs/DEFAULT_RMW_ZENOH_SESSION_CONFIG.json5"
 
 export RMW_IMPLEMENTATION=rmw_zenoh_cpp
 
@@ -161,4 +165,23 @@ export RMW_ZENOH_FRAGMENT_SIZE=131072
 export RMW_ZENOH_BATCH_SIZE=100000
 export RMW_ZENOH_ROUTER_CHECK_ATTEMPTS=0
 
-alias launch-experiments="ros2 launch ~/NeuROAM/launch/global_launch.py record_rosbag:=true > run_log.log 2>&1"
+alias launch-experiments="ros2 launch ~/NeuROAM/launch/global_launch.py record_rosbag:=true"
+
+# only run this if hostname is 'payload2'
+if [ "$(hostname)" = "payload2" ]; then
+    echo "Setting up network interface enP8p1s0 with static IP -- this should only be done on payload2"
+    sudo ip addr add 169.254.1.2/16 dev enP8p1s0
+fi
+
+echo ""
+echo "REMINDERS!!"
+echo "    [UPDATE ENVIRONMENT] run the command 'src-update' once to make sure you have the most up-to-date .bashrc file."
+echo "    [UPDATE MAIN REPO] make sure that ~/NeuROAM is on the 'main' branch and use 'git pull' to make sure code is up to date"
+echo "    [UPDATE SUBMODULES] make sure that all submodules in NeuROAM are up to date 'cd ~/NeuROAM; git pull --recurse-submodules'"
+echo "    [CHECK STORAGE] check if you have enough storage space on your system. If not, delete some files or move them to an external drive."
+echo ""
+df -h
+
+
+#!!!!!! NOTE: MAKE SURE YOU CHANGE THE FILE IN ~/NeuROAM/util/.bashrc
+#!!!!!! WE OVERWRITE THE FILE IN THE ROOT DIRECTORY

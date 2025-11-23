@@ -1,4 +1,7 @@
+.vscode/
+**-metadata.json
 **__pycache__**
+**run_log**
 **full_capture**
 **1-metadata.json
 build/
